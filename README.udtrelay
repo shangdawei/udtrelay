@@ -1,0 +1,149 @@
+UDTRELAY - proxy application to pass user's application networks
+           requests over high-speed UDT tunnels.
+
+TABLE OF CONTENTS
+  
+  Description
+  Scenario
+  Termonilogy
+  Examples runing udtrelay
+  Examples runing applications
+  Access control
+  Partial functionality
+  Logging and debuggung
+             
+
+DESCRIPTION
+
+  Udtrelay runs as socks4 servers for applications. All incoming requests are 
+  forwarded to UDT tunnel pointed to other udtrelay on remote site.
+
+SCENARIO
+
+  [          SITE1               ]                   [          SITE2          ]
+  [                              ]                   [                         ]
+  [[appl1]--socks4-->[udtrelay]<:]:::::UDT tunnel::::[:>[udtrelay]----->[appl2]]
+  [                              ]                   [                         ]
+
+TERMINOLOGY
+  
+  Incoming connection - connection originating in the remote site and going 
+                        into the local site.
+  Outgoing connection - connection originating in the local site and going out 
+                        to the remote site.
+                         
+EXAMPLES RUNING UDTRELAY
+
+ * Basic setup 
+ 
+   site1$ udtrelay 1081 9000 site2
+ 
+   site2$ udtrelay 1081 9000 site1
+   
+   Each instance is listening for socks4 requests from applications at port 
+   tcp/1080 and passes it to remote instance port udp/9000. 
+   
+ * Rendezvous mode setup
+
+   Rendezvous mode facilitates firewall traversing since each site periodically 
+   tries to "connect" to another and creates translation slot at firewall.
+    
+ 
+   site1$ udtrelay -R 9001 1081 9000 site2
+ 
+   site2$ udtrelay -R 9001 1081 9000 site1
+   
+   Each instance while playing as server binds udp/9000 and tries to "connect" 
+   to remote "rendezvous" client's port udp/9001. When remote instance is about 
+   to send client's connection request, it binds "rendezvous" udp/9001 port and 
+   connects to server's udp/9000 port.
+   
+EXAMPLES RUNNIING APPLICATIONS
+   
+   udtrelay runs as minimal socks4 server for clinet's applications.
+   Thus, it can use sock4 enabled applications or any suitable "socksifying"
+   technology e.g. NEC's runsocks.
+   
+   You can also use minisocks library included in this package to make you
+   applications to transparantly work with udtrelay. Minisocks library is a 
+   simple socks4 wrapper for "connect" library call. You should setup enviroment 
+   variable MINISOCKS_SERVER to point where udtgate runs.
+   
+   site1$ udtrelay 1081 9000 site2
+   
+   Then 
+   
+   site1$ export MINISOCKS_SERVER=localhost:1081
+   site1$ export LD_PRELOAD=/usr/local/lib/libminisocks.so
+   site1$ rsync file1 site2::tmp
+   
+   Or
+   
+   site1$ udtwrap -s localhost:1081 rsync file1 site2::tmp
+   
+       
+   
+ACCESS CONTROL
+
+  By default, udtrelay process connection requests only from/to localhost. 
+  T.e. source address in socks requests should match one of interfaces, 
+  similary final destination address in incoming requests from remote side 
+  should also match one of interfaces.
+  
+  -N option allows requests from/to local subnets.
+      
+  Double -N option (-N -N) disables access control t.e. all incoming and 
+  outgoing connections will be allowed.
+  
+  -A <acl> option establishes custom access control list for incoming 
+           connections. This allows grain access control to you recourses for 
+           foreing requests. <acl> is a '+'-separated list of 'permit' entries. 
+           Each entry has syntax: <addr_spec>[:<port_spec>]. 
+           
+           <addr_spec> is a specification destination address of connection and 
+           can be one of:
+            "any"         - any address
+            "local"       - local device
+            "attached"   - connected subnets
+            "d.d.d.d[/l]" - precise ip address or subnet with mask.  
+           
+           <port_spec> is a specification of port for destination connection. 
+            It is specified as comma-separated list of ports or port ranges 
+            (e.g. 1-1024).  
+
+           Examples:
+  
+            local+connected:80,8080,21000-22000 
+                 - allows all connections to local device and connections to 
+                 ports 80, 8080, 21000-22000 to devices in the attached subnets.
+            
+            193.0.0.0/22:80,8080
+                 - allows all connections with destination IP address matching
+                193.0.0.0/22 and destiantion port matching 80 or 8080.
+                
+            -A option cancels default rules for incoming connections associated 
+            with -N option.
+  
+PARTIAL FUNCTIONALITY
+  
+  udtrelay allows to disable connections incoming from a remote site or outgoing
+  to a remote site.
+  
+  -C don't accept incoming connection from remote site
+  -S don't accept outgoing connection to remote site
+  
+
+LOGGING AND DEBUGING
+   
+   By default stdout/stderr are used for diagnostic messages.
+   If the application is daemonized with -D option it uses syslog with 'daemon'
+   facility.
+   
+   -L option turns on the connection tracking.
+   
+   -d option increase debug level, maximal debug level is 3 (-d -d -d).
+      this option also turns the connection tracking on.
+      
+    All unsuccessful or rejected connections are always logged.  
+
+    

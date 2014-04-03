@@ -1,0 +1,72 @@
+2010-05-18 Version 1.5-fix6
+    * info:  fixed for run on Solaris
+    * done:  emulate getifaddr() 
+    * fixed: minisocks.cpp -> minisocks.c
+    * todo:  look for rendezvous mode on Solaris
+
+2010-05-17 Version 1.5-fix5
+    * done: Build for Solaris10(prereliase)
+    * fixed: -S bug
+    * bug:  bocked acl if no getifaddr()
+    * todo: emulate getifaddr() if absent  
+
+2008-10-01 Version 1.5-fix2
+    * fixed: temprorary blocked CCC extentions
+
+2007-12-18 Version 1.5
+    * done:  remove udt/ prefix form ext. udt headers
+             to get compatability with udt.sdk.gnu.4.1
+    * fixed: minor bug with dump_str()
+
+2007-09-20 Version 1.4
+    * done:  custom minisocks library for "socksifying" 
+             user applications
+    * fixed: hugns up after unsuccesful udt->tcp connection 
+    * fixed: some errors with build on x86_64 and gcc 3.4.6 
+
+2007-09-17 Version 1.3-fix5
+    * suspended the new unstable multiplexed IO with SOCK_API, 
+      temporary back to old blocking IO + multithread aproach
+      for connection worker.
+     
+    * fixed: bug in SOCK_API:select()
+
+2007-09-12 Version 1.3 (udtrelay/beta)
+    * done:  generic SOCK_API near to ready
+    * done:  partial move to generic socket api SOCK_API
+    * done:  accurate UDP max buffer checking
+    * done:  identification of udtrelay binary
+    * done:  force bind to allocate new local UDP port 
+             for new conection
+
+    * fixed: symmetrical access control: forbid passing 
+             udt->tcp connections to that hosts which are 
+             not accepted.
+    * fixed: send could loose data in udtrelay
+    * fixed: turn on syslog in the daemon mode 
+    * fixed: minor bug: UDT CC explicitly
+    
+    * todo: full SOCK_API 
+    * todo: fix unstable behaviuor in FreeBSD
+ 
+2007-09-03 Version 1.2 (udtrelay/beta)
+    * done:  UDT rendezvous mode support
+    * fixed: original UDT CC support (alfa)
+    *
+    * todo: generic socket api integration
+    * todo: fix symmetrical access control: forbid passing udt->tcp connections
+            to that hosts which are not accepted.
+    * todo: fix accurate UDP max buffer checking: currenlty it is 64K for 
+            FreeBSD and unlimited otherwise
+
+2007-08-24 Version 1.1 (udtrelay/beta)
+    *
+    * First release
+    *
+    * todo: UDT rendezvous mode support
+    * todo: original UDT CC (!)
+    * todo: fix accurate UDP max buffer checking
+    * todo: fix symmetrical access control: forbid passing 
+            udt->tcp connections
+            to that hosts which are not accepted.
+    * todo: generic socket api integration

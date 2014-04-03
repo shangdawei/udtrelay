@@ -1,0 +1,199 @@
+               UDTGATE - USER DATA TRANSPORT GATEWAY SYSTEM
+                             Ver 1.5-fix6 (2010-05-18)
+
+DISCLAIMER
+
+  The Authors assume no responsibility for damage or loss of system
+  performance as a direct or indirect result of the use of this
+  software. This software is provided "as is" without express or
+  implied warranty.
+
+
+TABLE OF CONTENTS
+
+  Disclaimer
+  Table Of Contents
+  Introduction
+  Supported Architectures
+  Prerequestives
+  Availability
+  Installation
+  Copying And Copyrights
+  Frequently Asked Questions
+  Code Update Announcements
+  Mailing Lists
+  Configuration and setup
+  Submitting Bug Reports
+  Thanks
+
+
+INTRODUCTION
+
+  UDTGATE is a set of application for high-performance transport
+  tunnels to efficiently manage intensive data streams between
+  interacting sites.
+
+  UDTGATE is primarily uses UDT package: a powerful highly
+  configurable udt-based user-level network transport suite which can
+  efficiently manage network links with high bandwidth*delay factors
+  and other "anomales" where basic TCP looses.
+
+  Currently UDTGATE package includes two applications:
+
+    * udtgate (planing for 2.x release) - solution to establish OSI L4 overlay
+    networks with possibility to transparently route clients's network
+    connection through several intermediate L4 gateways interacting
+    with each other with UDT protocol.
+
+    and
+
+    * udtrelay - lightweight proxy allowing to pass TCP connections
+    between two sites over UDT tunnel. 
+      See README.udtrelay for details.
+
+
+SUPPORTED ARCHITECTURES
+
+  This package aimed to be running on POSIX systems and possibly Win32
+  in the future.
+  
+  By now, it was successfully compiled and ran on the following
+  platforms:
+	  
+    Lunix:
+	i686-pc-linux-gnu   (EL3, gcc 3.2.3)	
+	x86_64-pc-linux-gnu (EL4, gcc 3.4.6)
+	
+    FreeBSD:
+	i386-pc-freebsd5.2.1
+        i386-pc-freebsd6.2
+        i386-pc-freebsd6.1
+
+  Please let us know if you compile it on other OS versions and it
+  works for you so we can add them to the above list.
+
+  Porting:  Please! read the PORTING file.
+
+  Also note that some architectures may have architecture specific
+  README files, so you should check to see if there is one appropriate
+  to your platform.
+
+AVAILABILITY
+
+  This project is hosted on SourceForge
+  
+  Sourceforge Project page:
+    - http://sourceforge.net/projects/udtgate
+  CVS access:
+    - visit CVS section on
+      http://sourceforge.net/projects/udtgate/
+  Source Download:
+    - visit the <Download>  section on
+      http://sourceforge.net/projects/udtgate/
+  Web page:
+    - http://udtgate.sourceforge.net
+  Project Wiki:
+    - http://udtgate.wiki.sourceforge.net
+  Mirrors:
+    - none yet
+
+PREREQUESTIVES
+
+   * UDT package ver 4.X (mandatory)
+     
+     http://udt.sourceforge.net
+
+     (! Important !) You should use *gnu_conf* branch in order avoid 
+     compilation problems. 
+     Latest tested distribution is udt.sdk.4.0.beta2.gnu_conf.tar.gz.
+   
+   * Install package to "socksify" applications (optional).
+
+     - For Unix    - runsocks
+       see ports or download:
+       http://freeware.sgi.com/source/socks5/
+       
+     - For Windows - SocksCap
+       http://www.socks.permeo.com/
+      
+       NOTE: minisocks.so library from this distribution
+             can be used to "socksify" applications. 
+
+INSTALLATION
+
+  See the INSTALL file distributed with this package.
+
+COPYING AND COPYRIGHTS
+
+  See the COPYING and LICENSE.* files distributed with this package.
+
+
+FREQUENTLY ASKED QUESTIONS
+
+  None yet
+
+
+CODE UPDATE ANNOUNCEMENTS
+
+  See the NEWS file and the ChangeLog file for details on what has
+  changed between releases.
+
+  If You want to track new releases, please use Source Forge's package 
+  monitoring facility:
+   1. Register as Source Forge user and login.
+   2. Go to <Download> section on http://sourceforge.net/projects/udtgate/
+   3. Click the [Monitor] icon nearby package entry. 
+  
+  You can also subscribe to  
+  
+  announcements. Any time we post new release package to SourceForge,
+  we'll mail this fact to udtgate-announce@lists.sourceforge.net. See
+  the MAILING LISTS section described below to sign up for these
+  announcements.
+
+MAILING LISTS
+
+  The lists:
+
+    Only announce  mailing list is supported:
+        udtgate-announce@lists.sourceforge.net
+
+    For other sections please use discussion forums in <Forums>
+    section on http://sourceforge.net/projects/udtgate/ and "forum
+    monitoring" facility for hot tracking.
+    
+
+CONFIGURATION AND SETUP
+
+  udtrelay - see README.udtrelay file for details
+
+
+
+SUBMITTING BUG REPORTS AND FEATURE REQUESTS
+
+  Important: *Please* include what version of the udtgate package you
+  are using and what architecture(s) you're using, as well as detailed
+  information about exactly what is wrong.
+
+  To submit a bug report or feature requests, please use the web
+  interface in the <Tracker> section on: 
+  
+  http://sourceforge.net/projects/udtgate/
+  
+
+THANKS
+
+  Developers are greatful to Source Forge team for an excelent project
+  maintenance platform. 
+  
+  Special thanks to UDT developers (http://udt.sourceforge.net/) from
+  National Center of Data Mining (USA, Illinois) whose product
+  encouraged us to start this project.
+  
+  The following people have contributed various patches and
+  improvements.  To them we owe our deepest thanks (and you do too!):
+
+    No yet :). Welcome!
+  
+  We've probably forgotten people on this list.  Let us know if you've
+  contributed code and we've left you out.
